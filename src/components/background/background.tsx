@@ -1,11 +1,8 @@
+import React, { FC } from 'react';
 import styles from './background.module.css';
-import {FC} from "react";
 
-const Background: FC<object> = () => {
-  return (
-    <div className={styles.gradientBackground}>
-    </div>
-  );
-};
+const Background: FC<object> = () => (
+  <div className={styles.gradientBackground} />
+);
 
 export default Background;
