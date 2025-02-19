@@ -8,6 +8,7 @@ const App: FC<object> = () => {
   return (
     <>
       <Background />
+      <Header />
       <Routes>
         <Route path="/" element={<HomePage/>}/>
         {/*<Route path="/about" element={<About />} />*/}
