@@ -1,0 +1,17 @@
+.bubblesContainer {
+    position: relative;
+    width: 100%;
+    height: 400px; /* Adjust as needed */
+}
+
+/* Removed CSS animations to avoid conflict with state-driven transforms */
+.bubble {
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    text-align: center;
+    padding: 10px;
+    color: #fff;
+}

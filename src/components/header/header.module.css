@@ -18,6 +18,7 @@
     padding: 0 2vw;
     justify-content: space-between;
     margin-top: 7vh;
+    z-index: 1000;
 }
 
 .logo {

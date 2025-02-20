@@ -1,7 +1,8 @@
 import React, { FC } from 'react';
+import { Bubbles } from '../../components';
 
-const HomePage: FC<object> = () => (
-  <h1> </h1>
+const HomePage: FC = () => (
+  <Bubbles />
 );
 
 export default HomePage;
