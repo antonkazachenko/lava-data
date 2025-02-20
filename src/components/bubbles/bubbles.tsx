@@ -1,133 +1,128 @@
 import React, {
-  FC, useState, useEffect, useRef,
+  FC, useEffect, useRef, useState,
 } from 'react';
+import Matter from 'matter-js';
 import styles from './bubbles.module.css';
 
-interface BubbleState {
+interface BubbleRenderState {
   x: number;
   y: number;
-  vx: number;
-  vy: number;
   radius: number;
 }
 
 const Bubbles: FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [bubbles, setBubbles] = useState<BubbleState[]>([]);
-  const [containerSize, setContainerSize] = useState({ width: 0, height: 0 });
+  const [bubbles, setBubbles] = useState<BubbleRenderState[]>([]);
 
-  // Initialize bubbles with random positions and increased velocities
   useEffect(() => {
-    if (containerRef.current) {
-      // For testing, increase container height so bubbles have more room.
-      const { width, height } = containerRef.current.getBoundingClientRect();
-      setContainerSize({ width, height: height + 200 }); // add extra vertical space
+    if (!containerRef.current) return;
 
-      const newBubbles = Array(3)
-        .fill(null)
-        .map(() => ({
-          x: Math.random() * width,
-          y: Math.random() * (height + 200),
-          vx: (Math.random() - 0.5) * 8, // increased velocity multiplier
-          vy: (Math.random() - 0.5) * 8,
-          radius: 75, // half of 150px bubble size
-        }));
-      setBubbles(newBubbles);
-    }
-  }, []);
+    const { width, height } = containerRef.current.getBoundingClientRect();
 
-  // Animation loop with wall and bubble-to-bubble collisions
-  useEffect(() => {
+    // 1) Create Matter.js engine, world, and runner
+    const engine = Matter.Engine.create();
+    const runner = Matter.Runner.create();
+
+    // Disable gravity so bubbles float
+    engine.world.gravity.y = 0;
+    engine.world.gravity.x = 0;
+
+    // 2) Create boundary walls to keep circles in view
+    const wallThickness = 50;
+    const walls = [
+      Matter.Bodies
+        .rectangle(width / 2, -wallThickness / 2, width, wallThickness, { isStatic: true }),
+      Matter.Bodies
+        .rectangle(width / 2, height + wallThickness / 2, width, wallThickness, { isStatic: true }),
+      Matter.Bodies
+        .rectangle(-wallThickness / 2, height / 2, wallThickness, height, { isStatic: true }),
+      Matter.Bodies
+        .rectangle(
+          width + wallThickness / 2,
+          height / 2,
+          wallThickness,
+          height,
+          { isStatic: true },
+        ),
+    ];
+
+    // 3) Create circle bodies for the bubbles with initial velocities.
+    const desiredSpeed = 5;
+    const circleBodies = Array(5)
+      .fill(null)
+      .map(() => {
+        const x = Math.random() * width;
+        const y = Math.random() * height;
+        const circle = Matter.Bodies.circle(x, y, 75, {
+          restitution: 0.9, // bounciness
+          friction: 0,
+          frictionAir: 0, // no air friction so speed is maintained
+        });
+        // Set an initial random velocity
+        Matter.Body.setVelocity(circle, {
+          x: (Math.random() - 0.5) * desiredSpeed,
+          y: (Math.random() - 0.5) * desiredSpeed,
+        });
+        return circle;
+      });
+
+    // 4) Add walls and bubbles to the Matter world
+    Matter.World.add(engine.world, [...walls, ...circleBodies]);
+
+    // 5) Start the Matter.js engine
+    Matter.Runner.run(runner, engine);
+
+    // 6) Animation loop: update React state with positions
     let animationFrameId: number;
     const animate = () => {
-      setBubbles((prevBubbles) => {
-        // Clone bubbles for updates
-        const newBubbles = prevBubbles.map((b) => ({ ...b }));
-
-        // Update positions and handle wall collisions
-        newBubbles.forEach((bubble) => {
-          bubble.x += bubble.vx;
-          bubble.y += bubble.vy;
-
-          // Wall collisions with damping
-          if (bubble.x < bubble.radius) {
-            bubble.x = bubble.radius;
-            bubble.vx = Math.abs(bubble.vx) * 0.9;
-          }
-          if (bubble.x > containerSize.width - bubble.radius) {
-            bubble.x = containerSize.width - bubble.radius;
-            bubble.vx = -Math.abs(bubble.vx) * 0.9;
-          }
-          if (bubble.y < bubble.radius) {
-            bubble.y = bubble.radius;
-            bubble.vy = Math.abs(bubble.vy) * 0.9;
-          }
-          if (bubble.y > containerSize.height - bubble.radius) {
-            bubble.y = containerSize.height - bubble.radius;
-            bubble.vy = -Math.abs(bubble.vy) * 0.9;
-          }
-        });
-
-        // Check for collisions between bubbles
-        // eslint-disable-next-line no-plusplus
-        for (let i = 0; i < newBubbles.length; i++) {
-          // eslint-disable-next-line no-plusplus
-          for (let j = i + 1; j < newBubbles.length; j++) {
-            const a = newBubbles[i];
-            const b = newBubbles[j];
-            const dx = b.x - a.x;
-            const dy = b.y - a.y;
-            const distance = Math.sqrt(dx * dx + dy * dy);
-            const minDist = a.radius + b.radius;
-            if (distance < minDist && distance > 0) {
-              // Normalize collision vector
-              const nx = dx / distance;
-              const ny = dy / distance;
-              // Calculate overlap
-              const overlap = (minDist - distance) / 2;
-              // Separate the bubbles
-              a.x -= overlap * nx;
-              a.y -= overlap * ny;
-              b.x += overlap * nx;
-              b.y += overlap * ny;
-
-              // Calculate relative velocity along the normal
-              const dvx = a.vx - b.vx;
-              const dvy = a.vy - b.vy;
-              const vn = dvx * nx + dvy * ny;
-
-              // Only resolve if they’re moving toward each other
-              if (vn < 0) {
-                const impulse = -vn; // assuming equal mass = 1
-                a.vx += impulse * nx;
-                a.vy += impulse * ny;
-                b.vx -= impulse * nx;
-                b.vy -= impulse * ny;
-              }
-            }
-          }
+      // Renormalize velocities to enforce constant speed
+      circleBodies.forEach((body) => {
+        const { x: vx, y: vy } = body.velocity;
+        const speed = Math.sqrt(vx * vx + vy * vy);
+        if (speed > 0) {
+          const scale = desiredSpeed / speed;
+          Matter.Body.setVelocity(body, {
+            x: body.velocity.x * scale,
+            y: body.velocity.y * scale,
+          });
         }
-        return newBubbles;
       });
+
+      // Update React state with latest positions
+      const newBubbles = circleBodies.map((body) => ({
+        x: body.position.x,
+        y: body.position.y,
+        radius: 75,
+      }));
+      setBubbles(newBubbles);
+
       animationFrameId = requestAnimationFrame(animate);
     };
-    animationFrameId = requestAnimationFrame(animate);
-    return () => cancelAnimationFrame(animationFrameId);
-  }, [containerSize]);
+    animate();
+
+    // 7) Cleanup on unmount
+    // eslint-disable-next-line consistent-return
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+      Matter.Runner.stop(runner);
+      Matter.World.clear(engine.world, false);
+      Matter.Engine.clear(engine);
+    };
+  }, []);
 
   return (
     <div ref={containerRef} className={styles.bubblesContainer}>
-      {bubbles.map((bubble, index) => (
+      {bubbles.map((b, i) => (
         <div
           /* eslint-disable-next-line react/no-array-index-key */
-          key={index}
+          key={i}
           className={styles.bubble}
           style={{
-            transform: `translate(${bubble.x - bubble.radius}px, ${bubble.y - bubble.radius}px)`,
+            transform: `translate(${b.x - b.radius}px, ${b.y - b.radius}px)`,
           }}
         >
           <h2>TITLE</h2>
-          <p>Lorem ipsum dolor sit aet...</p>
+          <p>Lorem ipsum dolor sit amet...</p>
         </div>
       ))}
     </div>
