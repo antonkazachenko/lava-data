@@ -1,5 +1,5 @@
 .gradientBackground {
-    position: fixed; /* Ensures it covers the entire screen */
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
