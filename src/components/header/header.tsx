@@ -15,7 +15,7 @@ const Header: FC<object> = () => (
         <NavLink to="/" className={styles.hoverText} data-text="Categories">
           Categories
         </NavLink>
-        <NavLink to="/" className={styles.hoverText} data-text="About">
+        <NavLink to="/about" className={styles.hoverText} data-text="About">
           About
         </NavLink>
       </div>
