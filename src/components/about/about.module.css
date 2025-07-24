@@ -1,5 +1,6 @@
-.link {
+.link button{
     display: flex;
+    width: 100%;
     justify-content: center;
     align-items: center;
     border-radius: 15px;
@@ -7,11 +8,22 @@
     border-top: 2px solid #D1981A;
     background: #E5A71F;
     box-shadow: 0 0 3px 0 rgba(255, 175, 0, 0.25), 0 -3px 0 0 #D1981A inset;
+    text-decoration: none;
 }
 
-.link a {
+.link {
     text-decoration: none;
+}
+
+.link button span {
     color: #F7F7F7;
+    text-align: center;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.10);
+    font-family: "Clash Display", sans-serif;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 150%;
 }
 
 .mainText {

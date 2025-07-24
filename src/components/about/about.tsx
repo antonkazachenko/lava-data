@@ -17,15 +17,11 @@ const AboutComponent: FC = () => (
         dolorem fugit, illum in, maxime, necessitatibus neque officia placeat quis ratione soluta.
       </p>
     </div>
-    <div className={styles.link}>
-      <a
-        href="https://www.nickmvincent.com/"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Link
-      </a>
-    </div>
+    <a href="https://www.nickmvincent.com/" target="_blank" rel="noopener noreferrer" className={styles.link}>
+      <button type="button">
+        <span>Link</span>
+      </button>
+    </a>
   </div>
 );
 
