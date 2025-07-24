@@ -1,33 +1,40 @@
 import React, {
   FC, useEffect, useRef, useState,
 } from 'react';
-import Matter from 'matter-js';
+import Matter, { Body } from 'matter-js';
 import styles from './bubbles.module.css';
+import { Item } from '../../api/items';
+
+interface BubblesProps {
+  items: Item[];
+}
 
 interface BubbleRenderState {
   x: number;
   y: number;
   radius: number;
+  itemData: Item;
 }
 
-const Bubbles: FC = () => {
+interface BodyWithItem extends Body {
+  itemData: Item;
+}
+
+const Bubbles: FC<BubblesProps> = ({ items }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [bubbles, setBubbles] = useState<BubbleRenderState[]>([]);
 
   useEffect(() => {
-    if (!containerRef.current) return;
+    if (!containerRef.current || items.length === 0) {
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      return () => {};
+    }
 
     const { width, height } = containerRef.current.getBoundingClientRect();
-
-    // 1) Create Matter.js engine, world, and runner
     const engine = Matter.Engine.create();
     const runner = Matter.Runner.create();
-
-    // Disable gravity so bubbles float
     engine.world.gravity.y = 0;
     engine.world.gravity.x = 0;
-
-    // 2) Create boundary walls to keep circles in view
     const wallThickness = 50;
     const walls = [
       Matter.Bodies
@@ -46,36 +53,30 @@ const Bubbles: FC = () => {
         ),
     ];
 
-    // 3) Create circle bodies for the bubbles with initial velocities.
     const desiredSpeed = 5;
-    const circleBodies = Array(5)
-      .fill(null)
-      .map(() => {
-        const x = Math.random() * width;
-        const y = Math.random() * height;
-        const circle = Matter.Bodies.circle(x, y, 75, {
-          restitution: 0.9, // bounciness
-          friction: 0,
-          frictionAir: 0, // no air friction so speed is maintained
-        });
-        // Set an initial random velocity
-        Matter.Body.setVelocity(circle, {
-          x: (Math.random() - 0.5) * desiredSpeed,
-          y: (Math.random() - 0.5) * desiredSpeed,
-        });
-        return circle;
+    const circleBodies = items.map((item) => {
+      const x = Math.random() * width;
+      const y = Math.random() * height;
+      const circle = Matter.Bodies.circle(x, y, 75, {
+        restitution: 0.9,
+        friction: 0,
+        frictionAir: 0,
       });
 
-    // 4) Add walls and bubbles to the Matter world
-    Matter.World.add(engine.world, [...walls, ...circleBodies]);
+      (circle as BodyWithItem).itemData = item;
 
-    // 5) Start the Matter.js engine
+      Matter.Body.setVelocity(circle, {
+        x: (Math.random() - 0.5) * desiredSpeed,
+        y: (Math.random() - 0.5) * desiredSpeed,
+      });
+      return circle;
+    });
+
+    Matter.World.add(engine.world, [...walls, ...circleBodies]);
     Matter.Runner.run(runner, engine);
 
-    // 6) Animation loop: update React state with positions
     let animationFrameId: number;
     const animate = () => {
-      // Renormalize velocities to enforce constant speed
       circleBodies.forEach((body) => {
         const { x: vx, y: vy } = body.velocity;
         const speed = Math.sqrt(vx * vx + vy * vy);
@@ -88,11 +89,12 @@ const Bubbles: FC = () => {
         }
       });
 
-      // Update React state with latest positions
       const newBubbles = circleBodies.map((body) => ({
         x: body.position.x,
         y: body.position.y,
         radius: 75,
+        // Cast here as well for type-safe access
+        itemData: (body as BodyWithItem).itemData,
       }));
       setBubbles(newBubbles);
 
@@ -100,31 +102,33 @@ const Bubbles: FC = () => {
     };
     animate();
 
-    // 7) Cleanup on unmount
-    // eslint-disable-next-line consistent-return
     return () => {
       cancelAnimationFrame(animationFrameId);
       Matter.Runner.stop(runner);
       Matter.World.clear(engine.world, false);
       Matter.Engine.clear(engine);
     };
-  }, []);
+  }, [items]);
 
   return (
     <div ref={containerRef} className={styles.bubblesContainer}>
-      {bubbles.map((b, i) => (
-        <div
-          /* eslint-disable-next-line react/no-array-index-key */
-          key={i}
-          className={styles.bubble}
-          style={{
-            transform: `translate(${b.x - b.radius}px, ${b.y - b.radius}px)`,
-          }}
-        >
-          <h2>TITLE</h2>
-          <p>Lorem ipsum dolor sit amet...</p>
-        </div>
-      ))}
+      {bubbles
+        .filter((b) => b.itemData) // Filter out bubbles without itemData
+        .map((b) => (
+          <div
+            key={b.itemData.id}
+            className={styles.bubble}
+            style={{
+              transform: `translate(${b.x - b.radius}px, ${b.y - b.radius}px)`,
+            }}
+          >
+            <h2>{b.itemData.Predicted_Label}</h2>
+            <p>
+              {b.itemData.cleaned_website_text.substring(0, 70)}
+              ...
+            </p>
+          </div>
+        ))}
     </div>
   );
 };
