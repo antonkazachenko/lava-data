@@ -4,9 +4,9 @@
 }
 
 .navBar {
-    width: 26vw;
+    max-width: 500px;
     box-sizing: border-box;
-    height: 7vh;
+    height: 75px;
     border-radius: 25px;
     border: 1px solid #3E3B3B;
     background: rgba(20, 20, 20, 0.70);
@@ -14,7 +14,6 @@
     backdrop-filter: blur(10px);
     display: flex;
     align-items: center;
-    gap: 1.5vh;
     padding: 0 2vw;
     justify-content: space-between;
     margin-top: 7vh;
@@ -24,8 +23,6 @@
 .logo {
     color: #F7F7F7;
     text-align: center;
-    leading-trim: both;
-    text-edge: cap;
     font-family: "Clash Display", serif;
     font-size: 18px;
     font-style: normal;
@@ -36,7 +33,7 @@
 
 .navMiddle {
     display: flex;
-    gap: 1vw;
+    gap: 30px;
     color: #F7F7F7;
     font-family: "Manrope", serif;
     font-size: 18px;
@@ -52,6 +49,7 @@
 
 .separator {
     background: #F7F7F7;
+    margin: 0 20px;
     height: 20px;
     width: 1px;
 }

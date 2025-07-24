@@ -1,4 +1,7 @@
 .modalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   color: #F7F7F7;
   font-family: Manrope, serif;
   font-size: 40px;

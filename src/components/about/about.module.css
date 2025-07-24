@@ -1,0 +1,34 @@
+.link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+    height: 4.5vh;
+    border-top: 2px solid #D1981A;
+    background: #E5A71F;
+    box-shadow: 0 0 3px 0 rgba(255, 175, 0, 0.25), 0 -3px 0 0 #D1981A inset;
+}
+
+.link a {
+    text-decoration: none;
+    color: #F7F7F7;
+}
+
+.mainText {
+    margin: 3.7vh 0;
+    padding: 3.7vh 2vw;
+    border-radius: 15px;
+    border: 1px solid #2A2A2A;
+    background: rgba(26, 26, 26, 0.65);
+    backdrop-filter: blur(10px);
+    font-family: "Manrope", serif;
+    font-weight: 400;
+}
+
+.mainText h3 {
+    color: #999;
+}
+
+.mainText p {
+    color: #F7F7F7;
+}
