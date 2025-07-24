@@ -3,7 +3,7 @@ import React, {
 } from 'react';
 import Matter, { Body } from 'matter-js';
 import styles from './bubbles.module.css';
-import { Item } from '../../api/items';
+import { Item, fetchSingleRandomItem } from '../../api/items';
 
 interface BubblesProps {
   items: Item[];
@@ -11,6 +11,7 @@ interface BubblesProps {
 }
 
 interface BubbleRenderState {
+  id: number;
   x: number;
   y: number;
   radius: number;
@@ -41,77 +42,62 @@ const Bubbles: FC<BubblesProps> = ({ items, speed }) => {
     const runner = Matter.Runner.create();
     engine.world.gravity.y = 0;
     engine.world.gravity.x = 0;
-    const wallThickness = 50;
-    const walls = [
-      Matter.Bodies.rectangle(
-        width / 2,
-        -wallThickness / 2,
-        width,
-        wallThickness,
-        { isStatic: true },
-      ),
-      Matter.Bodies.rectangle(
-        width / 2,
-        height + wallThickness / 2,
-        width,
-        wallThickness,
-        { isStatic: true },
-      ),
-      Matter.Bodies.rectangle(
-        -wallThickness / 2,
-        height / 2,
-        wallThickness,
-        height,
-        { isStatic: true },
-      ),
-      Matter.Bodies.rectangle(
-        width + wallThickness / 2,
-        height / 2,
-        wallThickness,
-        height,
-        { isStatic: true },
-      ),
-    ];
+
+    const bubbleRadius = 75;
 
     const circleBodies = items.map((item) => {
-      const x = Math.random() * width;
-      const y = Math.random() * height;
-      const circle = Matter.Bodies.circle(x, y, 75, {
-        restitution: 0.9,
-        friction: 0,
-        frictionAir: 0,
-      });
+      const circle = Matter.Bodies.circle(
+        Math.random() * width,
+        Math.random() * height,
+        bubbleRadius,
+        {
+          restitution: 0.9,
+          friction: 0,
+          frictionAir: 0,
+        },
+      );
 
       (circle as BodyWithItem).itemData = item;
 
       Matter.Body.setVelocity(circle, {
-        x: (Math.random() - 0.5) * speed,
-        y: (Math.random() - 0.5) * speed,
+        x: -speedRef.current * (0.5 + Math.random() * 0.5),
+        y: (Math.random() - 0.5) * 2,
       });
       return circle;
     });
 
-    Matter.World.add(engine.world, [...walls, ...circleBodies]);
+    Matter.World.add(engine.world, circleBodies);
     Matter.Runner.run(runner, engine);
 
     let animationFrameId: number;
     const animate = () => {
       circleBodies.forEach((body) => {
-        const { x: vx, y: vy } = body.velocity;
-        const currentSpeed = Math.sqrt(vx * vx + vy * vy);
-        if (currentSpeed > 0) {
-          const scale = speedRef.current / currentSpeed;
-          Matter.Body.setVelocity(body, {
-            x: body.velocity.x * scale,
-            y: body.velocity.y * scale,
+        Matter.Body.setVelocity(body, {
+          x: -speedRef.current,
+          y: body.velocity.y,
+        });
+
+        if (body.position.x < -bubbleRadius) {
+          // Change the x position to spawn further away
+          Matter.Body.setPosition(body, {
+            x: width + bubbleRadius * 3, // Spawn further off-screen
+            y: Math.random() * height,
           });
+
+          (async () => {
+            const newItem = await fetchSingleRandomItem();
+            if (newItem) {
+              (body as BodyWithItem).itemData = newItem;
+            }
+          })();
         }
       });
 
       const newBubbles = circleBodies.map((body) => ({
+        id: body.id,
         x: body.position.x,
         y: body.position.y,
-        radius: 75,
+        radius: bubbleRadius,
         itemData: (body as BodyWithItem).itemData,
       }));
       setBubbles(newBubbles);
@@ -126,7 +112,6 @@ const Bubbles: FC<BubblesProps> = ({ items, speed }) => {
       Matter.World.clear(engine.world, false);
       Matter.Engine.clear(engine);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [items]);
 
   return (
@@ -135,7 +120,7 @@ const Bubbles: FC<BubblesProps> = ({ items, speed }) => {
         .filter((b) => b.itemData)
         .map((b) => (
           <div
-            key={b.itemData.id}
+            key={b.id}
             className={styles.bubble}
             style={{
               transform: `translate(${b.x - b.radius}px, ${b.y - b.radius}px)`,
