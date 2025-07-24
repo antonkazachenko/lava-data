@@ -142,10 +142,6 @@ const Bubbles: FC<BubblesProps> = ({ items, speed }) => {
             }}
           >
             <h2>{b.itemData.Predicted_Label}</h2>
-            <p>
-              {b.itemData.cleaned_website_text.substring(0, 70)}
-              ...
-            </p>
           </div>
         ))}
     </div>

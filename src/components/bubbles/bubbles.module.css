@@ -5,6 +5,9 @@
 }
 
 .bubble {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: absolute;
     width: 150px;
     height: 150px;
