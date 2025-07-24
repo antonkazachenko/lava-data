@@ -7,6 +7,7 @@ import { Item } from '../../api/items';
 
 interface BubblesProps {
   items: Item[];
+  speed: number;
 }
 
 interface BubbleRenderState {
@@ -20,9 +21,14 @@ interface BodyWithItem extends Body {
   itemData: Item;
 }
 
-const Bubbles: FC<BubblesProps> = ({ items }) => {
+const Bubbles: FC<BubblesProps> = ({ items, speed }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [bubbles, setBubbles] = useState<BubbleRenderState[]>([]);
+  const speedRef = useRef(speed);
+
+  useEffect(() => {
+    speedRef.current = speed;
+  }, [speed]);
 
   useEffect(() => {
     if (!containerRef.current || items.length === 0) {
@@ -37,23 +43,36 @@ const Bubbles: FC<BubblesProps> = ({ items }) => {
     engine.world.gravity.x = 0;
     const wallThickness = 50;
     const walls = [
-      Matter.Bodies
-        .rectangle(width / 2, -wallThickness / 2, width, wallThickness, { isStatic: true }),
-      Matter.Bodies
-        .rectangle(width / 2, height + wallThickness / 2, width, wallThickness, { isStatic: true }),
-      Matter.Bodies
-        .rectangle(-wallThickness / 2, height / 2, wallThickness, height, { isStatic: true }),
-      Matter.Bodies
-        .rectangle(
-          width + wallThickness / 2,
-          height / 2,
-          wallThickness,
-          height,
-          { isStatic: true },
-        ),
+      Matter.Bodies.rectangle(
+        width / 2,
+        -wallThickness / 2,
+        width,
+        wallThickness,
+        { isStatic: true },
+      ),
+      Matter.Bodies.rectangle(
+        width / 2,
+        height + wallThickness / 2,
+        width,
+        wallThickness,
+        { isStatic: true },
+      ),
+      Matter.Bodies.rectangle(
+        -wallThickness / 2,
+        height / 2,
+        wallThickness,
+        height,
+        { isStatic: true },
+      ),
+      Matter.Bodies.rectangle(
+        width + wallThickness / 2,
+        height / 2,
+        wallThickness,
+        height,
+        { isStatic: true },
+      ),
     ];
 
-    const desiredSpeed = 5;
     const circleBodies = items.map((item) => {
       const x = Math.random() * width;
       const y = Math.random() * height;
@@ -66,8 +85,8 @@ const Bubbles: FC<BubblesProps> = ({ items }) => {
       (circle as BodyWithItem).itemData = item;
 
       Matter.Body.setVelocity(circle, {
-        x: (Math.random() - 0.5) * desiredSpeed,
-        y: (Math.random() - 0.5) * desiredSpeed,
+        x: (Math.random() - 0.5) * speed,
+        y: (Math.random() - 0.5) * speed,
       });
       return circle;
     });
@@ -79,9 +98,9 @@ const Bubbles: FC<BubblesProps> = ({ items }) => {
     const animate = () => {
       circleBodies.forEach((body) => {
         const { x: vx, y: vy } = body.velocity;
-        const speed = Math.sqrt(vx * vx + vy * vy);
-        if (speed > 0) {
-          const scale = desiredSpeed / speed;
+        const currentSpeed = Math.sqrt(vx * vx + vy * vy);
+        if (currentSpeed > 0) {
+          const scale = speedRef.current / currentSpeed;
           Matter.Body.setVelocity(body, {
             x: body.velocity.x * scale,
             y: body.velocity.y * scale,
@@ -93,7 +112,6 @@ const Bubbles: FC<BubblesProps> = ({ items }) => {
         x: body.position.x,
         y: body.position.y,
         radius: 75,
-        // Cast here as well for type-safe access
         itemData: (body as BodyWithItem).itemData,
       }));
       setBubbles(newBubbles);
@@ -108,12 +126,13 @@ const Bubbles: FC<BubblesProps> = ({ items }) => {
       Matter.World.clear(engine.world, false);
       Matter.Engine.clear(engine);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [items]);
 
   return (
     <div ref={containerRef} className={styles.bubblesContainer}>
       {bubbles
-        .filter((b) => b.itemData) // Filter out bubbles without itemData
+        .filter((b) => b.itemData)
         .map((b) => (
           <div
             key={b.itemData.id}
