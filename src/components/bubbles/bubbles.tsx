@@ -4,6 +4,7 @@ import React, {
 import Matter, { Body } from 'matter-js';
 import styles from './bubbles.module.css';
 import { Item, fetchSingleRandomItem } from '../../api/items';
+import { categoryColors, defaultColor } from '../../utils/colorMapping';
 
 interface BubblesProps {
   items: Item[];
@@ -78,9 +79,8 @@ const Bubbles: FC<BubblesProps> = ({ items, speed }) => {
         });
 
         if (body.position.x < -bubbleRadius) {
-          // Change the x position to spawn further away
           Matter.Body.setPosition(body, {
-            x: width + bubbleRadius * 3, // Spawn further off-screen
+            x: width + bubbleRadius * 3,
             y: Math.random() * height,
           });
 
@@ -118,17 +118,24 @@ const Bubbles: FC<BubblesProps> = ({ items, speed }) => {
     <div ref={containerRef} className={styles.bubblesContainer}>
       {bubbles
         .filter((b) => b.itemData)
-        .map((b) => (
-          <div
-            key={b.id}
-            className={styles.bubble}
-            style={{
-              transform: `translate(${b.x - b.radius}px, ${b.y - b.radius}px)`,
-            }}
-          >
-            <h2>{b.itemData.Predicted_Label}</h2>
-          </div>
-        ))}
+        .map((b) => {
+          const color = categoryColors[b.itemData.Predicted_Label] || defaultColor;
+
+          const bubbleStyle = {
+            transform: `translate(${b.x - b.radius}px, ${b.y - b.radius}px)`,
+            boxShadow: `inset 0 0 40px -10px ${color}, 0 0 15px -5px ${color}`,
+          };
+
+          return (
+            <div
+              key={b.id}
+              className={styles.bubble}
+              style={bubbleStyle}
+            >
+              <h2>{b.itemData.Predicted_Label}</h2>
+            </div>
+          );
+        })}
     </div>
   );
 };

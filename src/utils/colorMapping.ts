@@ -1,0 +1,28 @@
+export const categoryColors: { [key: string]: string } = {
+  Adult: '#FF69B4',
+  'Art & Design': '#9370DB',
+  'Software Development': '#00BFFF',
+  'Crime & Law': '#B22222',
+  'Education & Jobs': '#32CD32',
+  Hardware: '#A9A9A9',
+  Entertainment: '#FFD700',
+  'Social Life': '#FF4500',
+  'Fashion & Beauty': '#EE82EE',
+  'Finance & Business': '#4682B4',
+  'Food & Dining': '#ADFF2F',
+  Games: '#6A5ACD',
+  Health: '#20B2AA',
+  History: '#D2691E',
+  'Home & Hobbies': '#DAA520',
+  Industrial: '#708090',
+  Literature: '#8B4513',
+  Politics: '#4B0082',
+  Religion: '#F5DEB3',
+  'Science & Technology': '#00CED1',
+  Software: '#1E90FF',
+  'Sports & Fitness': '#DC143C',
+  Transportation: '#696969',
+  Travel: '#FFA500',
+};
+
+export const defaultColor = '#888888';
