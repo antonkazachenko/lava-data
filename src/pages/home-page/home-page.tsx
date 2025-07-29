@@ -31,6 +31,7 @@ const HomePage: FC = () => {
         <span>Speed</span>
         <Slider.Root
           className={styles.SliderRoot}
+          orientation="vertical"
           defaultValue={[50]}
           max={100}
           step={1}

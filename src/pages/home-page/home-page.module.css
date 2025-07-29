@@ -1,23 +1,22 @@
-/* src/pages/home-page/home-page.module.css */
-
 .sliderContainer {
     display: flex;
-    gap: 30px;
+    flex-direction: column;
+    gap: 20px;
     position: fixed;
-    bottom: 40px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 600px;
+    top: 50%;
+    right: 100px;
+    transform: translateY(-50%);
+    height: 50%;
     z-index: 2000;
     border-radius: 25px;
-    border: 1px solid #3E3B3B;
-    background: rgba(27, 27, 31, 0.70);
+    border: 1px solid #3e3b3b;
+    background: rgba(27, 27, 31, 0.7);
     box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.25);
     backdrop-filter: blur(10px);
-    padding: 15px 40px;
+    padding: 30px 20px;
     align-items: center;
-    color: rgba(247, 247, 247, 0.90);
-    font-family: "Manrope", serif;
+    color: rgba(247, 247, 247, 0.9);
+    font-family: 'Manrope', serif;
     font-size: 18px;
     font-style: normal;
     font-weight: 500;
@@ -27,44 +26,37 @@
 .SliderRoot {
     position: relative;
     display: flex;
+    flex-direction: column;
     align-items: center;
     user-select: none;
     touch-action: none;
-    width: 100%;
-    height: 20px;
+    height: 100%;
+    width: 20px;
 }
 
-/* Made the track darker and thinner */
 .SliderTrack {
-    background-color: #3e3b3b; /* Dark grey to match header border */
     position: relative;
     flex-grow: 1;
     border-radius: 9999px;
-    height: 3px;
+    width: 8px;
+    background: rgba(247, 247, 247, 0.20);
 }
 
-/* The filled part of the track now has the orange gradient */
 .SliderRange {
     position: absolute;
-    background: #F7F7F7;
+    bottom: 0;
+    background: #f7f7f7;
     border-radius: 9999px;
-    height: 100%;
+    width: 100%;
 }
 
-/* The thumb is now smaller with a border */
 .SliderThumb {
     display: block;
     width: 14px;
     height: 14px;
-    background-color: white;
-    border: 1px solid white;
+    border: 1px solid #F7F7F7;
+    background: #1B1B1F;
     border-radius: 50%;
     cursor: pointer;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
-}
-
-/* The focus ring now uses the orange accent color */
-.SliderThumb:focus {
-    outline: none;
-    box-shadow: 0 0 0 4px white;
 }
