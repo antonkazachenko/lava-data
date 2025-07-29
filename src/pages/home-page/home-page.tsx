@@ -3,11 +3,14 @@ import * as Slider from '@radix-ui/react-slider';
 import { Bubbles } from '../../components';
 import { fetchRandomItems, Item } from '../../api/items';
 import styles from './home-page.module.css';
+import { ReactComponent as PlayButton } from '../../assets/images/play.svg';
+import { ReactComponent as PauseButton } from '../../assets/images/stop.svg';
 
 const HomePage: FC = () => {
   const [items, setItems] = useState<Item[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [speed, setSpeed] = useState(5);
+  const [isPaused, setIsPaused] = useState(false);
 
   useEffect(() => {
     const loadItems = async () => {
@@ -26,7 +29,20 @@ const HomePage: FC = () => {
 
   return (
     <>
-      <Bubbles items={items} speed={speed} />
+      <Bubbles items={items} speed={isPaused ? 0 : speed} />
+
+      {/* Pause/Play Button */}
+      {/* eslint-disable-next-line max-len */}
+      {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
+      <div className={styles.pauseContainer} onClick={() => setIsPaused(!isPaused)}>
+        <span>{isPaused ? 'Play' : 'Pause'}</span>
+        {/* eslint-disable-next-line react/button-has-type */}
+        <button className={styles.iconButton}>
+          {isPaused ? <PlayButton /> : <PauseButton />}
+        </button>
+      </div>
+
+      {/* Speed Slider */}
       <div className={styles.sliderContainer}>
         <span>Speed</span>
         <Slider.Root
