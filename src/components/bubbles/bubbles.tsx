@@ -73,10 +73,14 @@ const Bubbles: FC<BubblesProps> = ({ items, speed }) => {
     let animationFrameId: number;
     const animate = () => {
       circleBodies.forEach((body) => {
-        Matter.Body.setVelocity(body, {
-          x: -speedRef.current,
-          y: body.velocity.y,
-        });
+        if (speedRef.current === 0) {
+          Matter.Body.setVelocity(body, { x: 0, y: 0 });
+        } else {
+          Matter.Body.setVelocity(body, {
+            x: -speedRef.current,
+            y: body.velocity.y,
+          });
+        }
 
         if (body.position.x < -bubbleRadius) {
           Matter.Body.setPosition(body, {
@@ -120,7 +124,6 @@ const Bubbles: FC<BubblesProps> = ({ items, speed }) => {
         .filter((b) => b.itemData)
         .map((b) => {
           const color = categoryColors[b.itemData.Predicted_Label] || defaultColor;
-
           const bubbleStyle = {
             transform: `translate(${b.x - b.radius}px, ${b.y - b.radius}px)`,
             boxShadow: `inset 0 0 40px -10px ${color}, 0 0 15px -5px ${color}`,
