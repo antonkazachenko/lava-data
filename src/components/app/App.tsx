@@ -14,8 +14,8 @@ const App: FC<object> = () => {
     <>
       <Background />
       <Header />
+      <HomePage />
       <Routes>
-        <Route path="/" element={<HomePage />} />
         <Route
           path="/about"
           element={(
