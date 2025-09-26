@@ -7,7 +7,7 @@ const Header: FC<object> = () => (
   <header className={styles.headerFlex}>
     <div className={styles.navBar}>
       {/* eslint-disable-next-line react/jsx-no-undef */}
-      <NavLink to="/" replace className={`${styles.hoverText} ${styles.logo}`} data-text="LAVADATA">
+      <NavLink to="/" replace className={styles.logo}>
         LAVADATA
       </NavLink>
       <div className={styles.separator} />

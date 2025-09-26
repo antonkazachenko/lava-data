@@ -21,14 +21,29 @@
 }
 
 .logo {
-    color: #F7F7F7;
-    text-align: center;
+    display: inline-block;
+    position: relative;
     font-family: "Clash Display", serif;
     font-size: 18px;
-    font-style: normal;
     font-weight: 700;
-    line-height: normal;
-    margin-top: 2px;
+    background: linear-gradient(90deg, #F90, #C31700, #F90);
+    background-size: 300% 100%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: logo-pulse 6s ease-in-out infinite;
+}
+
+.logo::after {
+    content: 'LAVADATA';
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: radial-gradient(14.52% 833.32% at 50% 50%, #F90 0%, #C31700 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: logo-scan 6s ease-in-out infinite;
 }
 
 .navMiddle {
@@ -107,4 +122,32 @@
 .hoverText:hover::after {
     opacity: 1;
     filter: drop-shadow(0 0 5px rgba(255,106,0,0.25));
+}
+
+@keyframes logo-pulse {
+    0%, 100% {
+        background-position: 0 50%;
+    }
+    33% {
+        background-position: 100% 50%;
+    }
+    66% {
+        background-position: 0 50%;
+    }
+}
+
+
+@keyframes logo-scan {
+    0%, 45%, 100% {
+        opacity: 0;
+        transform: scaleY(0.2);
+    }
+    60% {
+        opacity: 1;
+        transform: scaleY(1);
+    }
+    75% {
+        opacity: 0;
+        transform: scaleY(0.2);
+    }
 }
