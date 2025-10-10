@@ -8,6 +8,7 @@ import { fetchRandomItems, Item } from '../../api/items';
 import styles from './home-page.module.css';
 import { ReactComponent as PlayButton } from '../../assets/images/play.svg';
 import { ReactComponent as PauseButton } from '../../assets/images/stop.svg';
+import LoadingScreen from '../../components/loading-screen/loading-screen';
 
 const HomePage: FC = () => {
   const [items, setItems] = useState<Item[]>([]);
@@ -37,8 +38,8 @@ const HomePage: FC = () => {
     setSpeed(value[0] / 10);
   }, []);
 
-  if (isLoading) {
-    return <div style={{ color: 'white', textAlign: 'center', marginTop: '40vh' }}>Loading Data...</div>;
+  if (true || isLoading) {
+    return <LoadingScreen />;
   }
 
   return (

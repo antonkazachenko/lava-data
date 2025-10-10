@@ -1,0 +1,206 @@
+/* LoadingScreen.module.css */
+
+.loadingScreen {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #040113;
+    z-index: 9999;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative; /* Changed from logo/bar */
+    z-index: 2; /* Changed from logo/bar */
+}
+
+.blobContainer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.9;
+}
+
+/* Individual blob styles with increased sizes */
+.blob1 {
+    width: 600px; /* Increased from 400px */
+    height: 600px; /* Increased from 400px */
+    top: -150px;
+    left: -200px;
+    background: radial-gradient(circle, #000352, transparent 60%);
+    animation: moveBlob1 20s infinite alternate;
+}
+
+.blob2 {
+    width: 750px; /* Increased from 500px */
+    height: 750px; /* Increased from 500px */
+    bottom: -300px;
+    right: -300px;
+    background: radial-gradient(circle, #023e8a, transparent 60%);
+    animation: moveBlob2 25s infinite alternate;
+}
+
+.blob3 {
+    width: 500px; /* Increased from 350px */
+    height: 500px; /* Increased from 350px */
+    top: 150px;
+    right: -150px;
+    background: radial-gradient(circle, #000352, transparent 60%);
+    animation: moveBlob3 15s infinite alternate;
+}
+
+.blob4 {
+    width: 450px; /* Increased from 300px */
+    height: 450px; /* Increased from 300px */
+    bottom: 75px;
+    left: -200px;
+    background: radial-gradient(circle, #023e8a, transparent 60%);
+    animation: moveBlob4 18s infinite alternate;
+}
+
+.blob5 {
+    width: 400px; /* Increased from 250px */
+    height: 400px; /* Increased from 250px */
+    top: -75px;
+    right: -75px;
+    background: radial-gradient(circle, #040113, transparent 60%);
+    animation: moveBlob5 22s infinite alternate;
+}
+
+/* Foreground element styles */
+.logo, .barContainer {
+    position: relative;
+    z-index: 2;
+}
+
+.logo {
+    text-align: center;
+    color: #FFFFFF;
+    text-shadow: 0 0 9px rgba(209, 152, 26, 0.30);
+    font-family: "Clash Display", serif;
+    font-size: 54px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 150%;
+    margin-bottom: 25%;
+}
+
+.barContainer {
+    width: 700px;
+    height: 2px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 1px;
+}
+
+.barFill {
+    width: 100%;
+    height: 100%;
+    background-color: #FFFFFF;
+    border-radius: 1px;
+    transform-origin: left;
+    animation: fill-bar 3s ease-in-out forwards;
+}
+
+.barFill::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 100%;
+    background: radial-gradient(circle, white 0%, transparent 70%);
+    filter: blur(6px);
+    opacity: 0;
+    animation: glow-tail 3s ease-in-out forwards;
+}
+
+/* --- Keyframe Animations --- */
+
+@keyframes fill-bar {
+    from {
+        transform: scaleX(0);
+    }
+    to {
+        transform: scaleX(1);
+    }
+}
+
+@keyframes glow-tail {
+    0% {
+        opacity: 0;
+        transform: translateY(-50%) scale(0.8);
+    }
+    60% {
+        opacity: 0.4;
+    }
+    90% {
+        opacity: 1;
+        transform: translateY(-50%) scale(1.1);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(-50%) scale(1);
+    }
+}
+
+@keyframes moveBlob1 {
+    from {
+        transform: translate(0, 0) rotate(0deg);
+    }
+    to {
+        transform: translate(200px, 300px) rotate(180deg);
+    }
+}
+
+@keyframes moveBlob2 {
+    from {
+        transform: translate(0, 0) rotate(0deg);
+    }
+    to {
+        transform: translate(-300px, -250px) rotate(270deg);
+    }
+}
+
+@keyframes moveBlob3 {
+    from {
+        transform: translate(0, 0) rotate(0deg);
+    }
+    to {
+        transform: translate(-150px, 150px) rotate(90deg);
+    }
+}
+
+@keyframes moveBlob4 {
+    from {
+        transform: translate(0, 0) rotate(0deg);
+    }
+    to {
+        transform: translate(300px, -200px) rotate(220deg);
+    }
+}
+
+@keyframes moveBlob5 {
+    from {
+        transform: translate(0, 0) rotate(0deg);
+    }
+    to {
+        transform: translate(-250px, 250px) rotate(120deg);
+    }
+}
