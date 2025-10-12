@@ -20,6 +20,15 @@
     z-index: 1000;
 }
 
+.logo,
+.logo:link,
+.logo:visited,
+.logo:hover,
+.logo:active,
+.logo::after {
+    text-decoration: none;
+}
+
 .logo {
     display: inline-block;
     position: relative;

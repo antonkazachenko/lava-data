@@ -8,11 +8,11 @@ import { fetchRandomItems, Item } from '../../api/items';
 import styles from './home-page.module.css';
 import { ReactComponent as PlayButton } from '../../assets/images/play.svg';
 import { ReactComponent as PauseButton } from '../../assets/images/stop.svg';
-import LoadingScreen from '../../components/loading-screen/loading-screen';
+// import LoadingScreen from '../../components/loading-screen/loading-screen';
 
 const HomePage: FC = () => {
   const [items, setItems] = useState<Item[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  // const [isLoading, setIsLoading] = useState(true);
   const [speed, setSpeed] = useState(5);
   const [isPaused, setIsPaused] = useState(false);
 
@@ -21,10 +21,10 @@ const HomePage: FC = () => {
 
   useEffect(() => {
     const loadItems = async () => {
-      setIsLoading(true);
+      // setIsLoading(true);
       const fetchedItems = await fetchRandomItems();
       setItems(fetchedItems);
-      setIsLoading(false);
+      // setIsLoading(false);
     };
 
     loadItems();
@@ -38,9 +38,9 @@ const HomePage: FC = () => {
     setSpeed(value[0] / 10);
   }, []);
 
-  if (true || isLoading) {
-    return <LoadingScreen />;
-  }
+  // if (true || isLoading) {
+  //   return <LoadingScreen />;
+  // }
 
   return (
     <>

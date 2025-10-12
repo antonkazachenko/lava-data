@@ -2,7 +2,7 @@ import { Routes, Route, useNavigate } from 'react-router-dom';
 import React, { FC } from 'react';
 import styles from './App.module.css';
 import HomePage from '../../pages';
-import { AboutComponent, Background } from '../index';
+import { AboutComponent, Background, Header } from '../index';
 import Modal from '../modal/modal';
 
 const App: FC<object> = () => {
@@ -13,7 +13,7 @@ const App: FC<object> = () => {
   return (
     <>
       <Background />
-      {/* <Header /> */}
+      <Header />
       <HomePage />
       <Routes>
         <Route
