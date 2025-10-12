@@ -1,34 +1,24 @@
 import React, {
-  FC, useEffect, useState, useCallback,
+  FC, useState, useCallback,
 } from 'react';
 import { useLocation } from 'react-router-dom';
 import * as Slider from '@radix-ui/react-slider';
 import { Bubbles } from '../../components';
-import { fetchRandomItems, Item } from '../../api/items';
 import styles from './home-page.module.css';
 import { ReactComponent as PlayButton } from '../../assets/images/play.svg';
 import { ReactComponent as PauseButton } from '../../assets/images/stop.svg';
-// import LoadingScreen from '../../components/loading-screen/loading-screen';
+import { Item } from '../../api/items';
 
-const HomePage: FC = () => {
-  const [items, setItems] = useState<Item[]>([]);
-  // const [isLoading, setIsLoading] = useState(true);
+interface IHomePageProps {
+  items: Item[];
+}
+
+const HomePage: FC<IHomePageProps> = ({ items }) => {
   const [speed, setSpeed] = useState(5);
   const [isPaused, setIsPaused] = useState(false);
 
   const location = useLocation();
   const isModalOpen = location.pathname === '/about';
-
-  useEffect(() => {
-    const loadItems = async () => {
-      // setIsLoading(true);
-      const fetchedItems = await fetchRandomItems();
-      setItems(fetchedItems);
-      // setIsLoading(false);
-    };
-
-    loadItems();
-  }, []);
 
   const togglePause = useCallback(() => {
     setIsPaused((prevIsPaused) => !prevIsPaused);
@@ -37,10 +27,6 @@ const HomePage: FC = () => {
   const handleSpeedChange = useCallback((value: number[]) => {
     setSpeed(value[0] / 10);
   }, []);
-
-  // if (true || isLoading) {
-  //   return <LoadingScreen />;
-  // }
 
   return (
     <>
