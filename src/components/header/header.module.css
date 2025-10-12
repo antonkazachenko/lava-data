@@ -133,6 +133,108 @@
     filter: drop-shadow(0 0 5px rgba(255,106,0,0.25));
 }
 
+.dropdownTrigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: none;
+    background: transparent;
+    font: inherit;
+    padding: 0;
+    cursor: pointer;
+}
+
+.dropdownTriggerLabel {
+    display: inline-block;
+}
+
+.dropdownTrigger:focus-visible {
+    outline: none;
+    filter: drop-shadow(0 0 8px rgba(255, 106, 0, 0.35));
+}
+
+.dropdownTrigger[data-state="open"] .dropdownTriggerLabel {
+    color: transparent;
+}
+
+.dropdownTrigger[data-state="open"] .dropdownTriggerLabel::after {
+    opacity: 1;
+    filter: drop-shadow(0 0 5px rgba(255,106,0,0.25));
+}
+
+.dropdownTrigger[data-state="open"] .dropdownIcon {
+    transform: rotate(180deg);
+}
+
+.dropdownIcon {
+    width: 16px;
+    height: 16px;
+    color: #F7F7F7;
+    transition: transform 0.2s ease;
+}
+
+.dropdownContent {
+    min-width: 200px;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(23, 23, 23, 0.95);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+    padding: 12px 0;
+    color: #F7F7F7;
+    font-family: "Manrope", serif;
+    font-size: 16px;
+    backdrop-filter: blur(12px);
+}
+
+.dropdownLabel {
+    padding: 0 18px 10px;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.dropdownSeparator {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.1);
+    margin: 0 18px 8px;
+}
+
+.dropdownItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 18px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.dropdownItem[data-state="open"],
+.dropdownItem[data-highlighted] {
+    background: rgba(255, 153, 0, 0.15);
+    color: #FFB75C;
+}
+
+.dropdownItemIcon {
+    display: inline-flex;
+    width: 24px;
+    height: 24px;
+    color: inherit;
+}
+
+.dropdownItemIcon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.dropdownShortcut {
+    font-size: 13px;
+    opacity: 0.65;
+}
+
+.dropdownArrow {
+    fill: rgba(23, 23, 23, 0.95);
+}
+
 @keyframes logo-pulse {
     0%, 100% {
         background-position: 0 50%;

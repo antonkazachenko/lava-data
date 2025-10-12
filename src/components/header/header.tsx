@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import { NavLink } from 'react-router-dom';
 import { ReactComponent as GithubLogo } from '../../assets/images/githubLogo.svg';
+import CategoriesDropdown from './categories-dropdown';
 import styles from './header.module.css';
 
 const Header: FC<object> = () => (
@@ -12,9 +13,7 @@ const Header: FC<object> = () => (
       </NavLink>
       <div className={styles.separator} />
       <div className={styles.navMiddle}>
-        <NavLink to="/" className={styles.hoverText} data-text="Categories">
-          Categories
-        </NavLink>
+        <CategoriesDropdown />
         <NavLink to="/about" className={styles.hoverText} data-text="About">
           About
         </NavLink>
