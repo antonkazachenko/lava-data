@@ -36,71 +36,30 @@ const ChevronDownIcon: IconComponent = ({ className }) => (
 );
 
 const TitleIcon: IconComponent = ({ className }) => (
-  <svg
-    className={className}
-    viewBox="0 0 20 20"
-    xmlns="http://www.w3.org/2000/svg"
-    role="img"
-    aria-hidden="true"
-    focusable="false"
-  >
-    <path
-      d="M4 6h12M10 6v8M6 14h8"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      fill="none"
-    />
+  <svg className={className} xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+    <path d="M12.6668 14.0003V12.6669C12.6668 11.9597 12.3859 11.2814 11.8858 10.7813C11.3857 10.2812 10.7074 10.0003 10.0002 10.0003H6.00016C5.29292 10.0003 4.61464 10.2812 4.11454 10.7813C3.61445 11.2814 3.3335 11.9597 3.3335 12.6669V14.0003" stroke="#F7F7F7" strokeOpacity="0.9" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M8.00016 7.33361C9.47292 7.33361 10.6668 6.1397 10.6668 4.66694C10.6668 3.19418 9.47292 2.00027 8.00016 2.00027C6.5274 2.00027 5.3335 3.19418 5.3335 4.66694C5.3335 6.1397 6.5274 7.33361 8.00016 7.33361Z" stroke="#F7F7F7" strokeOpacity="0.9" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
 
 const CardIcon: IconComponent = ({ className }) => (
-  <svg
-    className={className}
-    viewBox="0 0 20 20"
-    xmlns="http://www.w3.org/2000/svg"
-    role="img"
-    aria-hidden="true"
-    focusable="false"
-  >
-    <rect
-      x="3.75"
-      y="5"
-      width="12.5"
-      height="10"
-      rx="2"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      fill="none"
-    />
-    <path
-      d="M4 8h12M7 11h3"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      fill="none"
-    />
+  <svg className={className} xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+    <path d="M13.3335 3.33362H2.66683C1.93045 3.33362 1.3335 3.93057 1.3335 4.66695V11.3336C1.3335 12.07 1.93045 12.667 2.66683 12.667H13.3335C14.0699 12.667 14.6668 12.07 14.6668 11.3336V4.66695C14.6668 3.93057 14.0699 3.33362 13.3335 3.33362Z" stroke="#F7F7F7" strokeOpacity="0.9" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M1.3335 6.66693H14.6668" stroke="#F7F7F7" strokeOpacity="0.9" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
 
 const CogIcon: IconComponent = ({ className }) => (
-  <svg
-    className={className}
-    viewBox="0 0 20 20"
-    xmlns="http://www.w3.org/2000/svg"
-    role="img"
-    aria-hidden="true"
-    focusable="false"
-  >
-    <path
-      d="m11.41 2.75.41 1.68c.2.82.9 1.42 1.74 1.48l1.72.12c.58.04.91.69.6 1.18l-.95 1.44a1.74 1.74 0 0 0 0 1.92l.95 1.44c.31.49-.02 1.14-.6 1.18l-1.72.12a1.75 1.75 0 0 0-1.74 1.48l-.41 1.68c-.14.57-.86.78-1.3.38l-1.3-1.16a1.75 1.75 0 0 0-2.26 0l-1.3 1.16c-.44.4-1.16.19-1.3-.38l-.41-1.68a1.75 1.75 0 0 0-1.74-1.48l-1.72-.12c-.58-.04-.91-.69-.6-1.18l.95-1.44a1.74 1.74 0 0 0 0-1.92L2.81 7.21c-.31-.49.02-1.14.6-1.18l1.72-.12a1.75 1.75 0 0 0 1.74-1.48l.41-1.68c.14-.57.86-.78 1.3-.38l1.3 1.16c.64.57 1.62.57 2.26 0l1.3-1.16c.44-.4 1.16-.19 1.3.38ZM10 12a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"
-      stroke="currentColor"
-      strokeWidth="1.4"
-      strokeLinejoin="round"
-      fill="none"
-    />
+  <svg className={className} xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+    <g clipPath="url(#clip0_1920_135)">
+      <path d="M8.14667 1.33362H7.85333C7.49971 1.33362 7.16057 1.47409 6.91053 1.72414C6.66048 1.97419 6.52 2.31333 6.52 2.66695V2.78695C6.51976 3.02077 6.45804 3.25041 6.34103 3.45284C6.22401 3.65527 6.05583 3.82338 5.85333 3.94028L5.56667 4.10695C5.36398 4.22398 5.13405 4.28558 4.9 4.28558C4.66595 4.28558 4.43603 4.22398 4.23333 4.10695L4.13333 4.05362C3.82738 3.87713 3.46389 3.82925 3.12267 3.92049C2.78145 4.01173 2.49037 4.23464 2.31333 4.54028L2.16667 4.79362C1.99018 5.09957 1.9423 5.46306 2.03354 5.80428C2.12478 6.14551 2.34769 6.43658 2.65333 6.61362L2.75333 6.68029C2.95485 6.79663 3.12241 6.96368 3.23937 7.16484C3.35632 7.366 3.4186 7.59427 3.42 7.82695V8.16695C3.42093 8.4019 3.35977 8.63292 3.2427 8.83662C3.12563 9.04033 2.95681 9.20948 2.75333 9.32695L2.65333 9.38695C2.34769 9.56399 2.12478 9.85506 2.03354 10.1963C1.9423 10.5375 1.99018 10.901 2.16667 11.207L2.31333 11.4603C2.49037 11.7659 2.78145 11.9888 3.12267 12.0801C3.46389 12.1713 3.82738 12.1234 4.13333 11.947L4.23333 11.8936C4.43603 11.7766 4.66595 11.715 4.9 11.715C5.13405 11.715 5.36398 11.7766 5.56667 11.8936L5.85333 12.0603C6.05583 12.1772 6.22401 12.3453 6.34103 12.5477C6.45804 12.7502 6.51976 12.9798 6.52 13.2136V13.3336C6.52 13.6872 6.66048 14.0264 6.91053 14.2764C7.16057 14.5265 7.49971 14.667 7.85333 14.667H8.14667C8.50029 14.667 8.83943 14.5265 9.08948 14.2764C9.33952 14.0264 9.48 13.6872 9.48 13.3336V13.2136C9.48024 12.9798 9.54196 12.7502 9.65898 12.5477C9.77599 12.3453 9.94418 12.1772 10.1467 12.0603L10.4333 11.8936C10.636 11.7766 10.866 11.715 11.1 11.715C11.334 11.715 11.564 11.7766 11.7667 11.8936L11.8667 11.947C12.1726 12.1234 12.5361 12.1713 12.8773 12.0801C13.2186 11.9888 13.5096 11.7659 13.6867 11.4603L13.8333 11.2003C14.0098 10.8943 14.0577 10.5308 13.9665 10.1896C13.8752 9.8484 13.6523 9.55732 13.3467 9.38028L13.2467 9.32695C13.0432 9.20948 12.8744 9.04033 12.7573 8.83662C12.6402 8.63292 12.5791 8.4019 12.58 8.16695V7.83362C12.5791 7.59867 12.6402 7.36765 12.7573 7.16395C12.8744 6.96024 13.0432 6.79109 13.2467 6.67362L13.3467 6.61362C13.6523 6.43658 13.8752 6.14551 13.9665 5.80428C14.0577 5.46306 14.0098 5.09957 13.8333 4.79362L13.6867 4.54028C13.5096 4.23464 13.2186 4.01173 12.8773 3.92049C12.5361 3.82925 12.1726 3.87713 11.8667 4.05362L11.7667 4.10695C11.564 4.22398 11.334 4.28558 11.1 4.28558C10.866 4.28558 10.636 4.22398 10.4333 4.10695L10.1467 3.94028C9.94418 3.82338 9.77599 3.65527 9.65898 3.45284C9.54196 3.25041 9.48024 3.02077 9.48 2.78695V2.66695C9.48 2.31333 9.33952 1.97419 9.08948 1.72414C8.83943 1.47409 8.50029 1.33362 8.14667 1.33362Z" stroke="#F7F7F7" strokeOpacity="0.9" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M8 10.0003C9.10457 10.0003 10 9.10484 10 8.00027C10 6.89571 9.10457 6.00027 8 6.00027C6.89543 6.00027 6 6.89571 6 8.00027C6 9.10484 6.89543 10.0003 8 10.0003Z" stroke="#F7F7F7" strokeOpacity="0.9" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    </g>
+    <defs>
+      <clipPath id="clip0_1920_135">
+        <rect width="16" height="16" fill="white" transform="translate(0 0.000274658)" />
+      </clipPath>
+    </defs>
   </svg>
 );
 
@@ -108,19 +67,16 @@ const menuItems: MenuItem[] = [
   {
     id: 'title',
     label: 'Title',
-    shortcut: '⌘⇧B',
     icon: TitleIcon,
   },
   {
     id: 'raw',
-    label: 'Raw',
-    shortcut: '⌘⇧B',
+    label: 'Raw Data',
     icon: CardIcon,
   },
   {
     id: 'source',
     label: 'Source',
-    shortcut: '⌘⇧B',
     icon: CogIcon,
   },
 ];
@@ -148,10 +104,6 @@ const CategoriesDropdown: FC = () => (
         sideOffset={12}
         collisionPadding={12}
       >
-        <DropdownMenu.Label className={styles.dropdownLabel}>
-          Categories
-        </DropdownMenu.Label>
-        <DropdownMenu.Separator className={styles.dropdownSeparator} />
         {menuItems.map((item) => (
           <DropdownMenu.Item
             key={item.id}
@@ -166,7 +118,6 @@ const CategoriesDropdown: FC = () => (
             ) : null}
           </DropdownMenu.Item>
         ))}
-        <DropdownMenu.Arrow className={styles.dropdownArrow} width={12} height={6} />
       </DropdownMenu.Content>
     </DropdownMenu.Portal>
   </DropdownMenu.Root>
