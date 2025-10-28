@@ -6,15 +6,12 @@ const AboutComponent: FC = () => (
     <div className={styles.mainText}>
       <h3>Overview</h3>
       <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusantium aliquid animi,
-        assumenda commodi consectetur delectus deserunt dicta doloremque ea eos ex excepturi,
-        facilis inventore iure labore laboriosam laborum laudantium modi molestias neque odit
-        officia officiis omnis quo quos similique soluta sunt, unde veniam voluptas voluptate
-        voluptatem voluptates? Accusantium asperiores deleniti esse incidunt necessitatibus,
-        omnis? A accusantium, beatae consequuntur delectus dolorem eligendi esse est et ex
-        expedita libero molestiae natus necessitatibus perferendis quae quas quod rem suscipit
-        tempora totam ullam velit voluptatum. Alias animi blanditiis commodi deserunt dolor
-        dolorem fugit, illum in, maxime, necessitatibus neque officia placeat quis ratione soluta.
+        The Data Lava Lamp project is a visual tool for exploring AI training data, and
+        especially for engaging with the seeming randomness and diversity of content in
+        massive pre-training datasets. While the&quot;lava lamp&quot;component is meant
+        to provide a unique view into training data, under the hood the project also allows
+        for more traditional data visualization and for integration with various classifiers
+        that categorize pieces of data (for instance, by &quot;job category of data creator&quot;).
       </p>
     </div>
     <a href="https://www.nickmvincent.com/" target="_blank" rel="noopener noreferrer" className={styles.link}>
