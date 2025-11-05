@@ -1,26 +1,55 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
-# dependencies
-/node_modules
-/.pnp
+# Core dependencies
+node_modules/
+/.pnp/
 .pnp.js
 
-# testing
-/coverage
+# Build output
+build/
+dist/
 
-# production
-/build
+# Test artifacts
+coverage/
+*.lcov
 
-# misc
-.DS_Store
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+# Environment files
+.env
+.env.*
+!.env.example
 
+# Logs & diagnostics
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+*.log
 
-.idea
-/src/components/loading-screen/loading-screen.tsx
+# Tool caches
+.eslintcache
+.stylelintcache
+.parcel-cache/
+.turbo/
+
+# Framework caches
+.next/
+.nuxt/
+.svelte-kit/
+
+# IDE & editor folders
+.idea/
+.vscode/
+.fleet/
+
+# OS cruft
+.DS_Store
+Thumbs.db
+ehthumbs.db
+
+# Local tooling
+.netlify/
+.vercel/
+.firebase/
+.tmp/
+
+# TypeScript build info
+*.tsbuildinfo
