@@ -1,4 +1,4 @@
-# Lava Data Survey 🌋📊
+# Lava Data Visualization Research 🌋📊
 
 # A modern interactive visualization research platform comparing traditional and dynamic data approaches
 
