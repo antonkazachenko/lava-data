@@ -1,11 +1,19 @@
 # Core dependencies
 node_modules/
+/mobile/node_modules/
 /.pnp/
 .pnp.js
 
 # Build output
 build/
 dist/
+/mobile/android/app/build/
+/mobile/android/.gradle/
+/mobile/android/.idea/
+/mobile/android/local.properties
+/mobile/ios/build/
+/mobile/ios/DerivedData/
+/mobile/ios/Pods/
 
 # Test artifacts
 coverage/
@@ -29,6 +37,8 @@ lerna-debug.log*
 .stylelintcache
 .parcel-cache/
 .turbo/
+.gradle/
+*.iml
 
 # Framework caches
 .next/
@@ -39,6 +49,7 @@ lerna-debug.log*
 .idea/
 .vscode/
 .fleet/
+xcuserdata/
 
 # OS cruft
 .DS_Store
@@ -50,6 +61,8 @@ ehthumbs.db
 .vercel/
 .firebase/
 .tmp/
+*.keystore
+*.jks
 
 # TypeScript build info
 *.tsbuildinfo
