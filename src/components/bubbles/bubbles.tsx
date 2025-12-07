@@ -9,6 +9,7 @@ import { categoryColors, defaultColor } from '../../utils/colorMapping';
 interface BubblesProps {
   items: Item[];
   speed: number;
+  displayMode: 'title' | 'raw' | 'source';
 }
 
 interface BubbleRenderState {
@@ -23,7 +24,22 @@ interface BodyWithItem extends Body {
   itemData: Item;
 }
 
-const Bubbles: FC<BubblesProps> = ({ items, speed }) => {
+const getDomain = (websiteUrl: string) => {
+  try {
+    const url = new URL(websiteUrl);
+    return url.hostname.replace(/^www\./i, '');
+  } catch (e) {
+    return websiteUrl;
+  }
+};
+
+const getRawPreview = (text: string) => {
+  if (!text) return '';
+  const words = text.trim().split(/\s+/).filter(Boolean).slice(0, 2);
+  return words.join(' ');
+};
+
+const Bubbles: FC<BubblesProps> = ({ items, speed, displayMode }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [bubbles, setBubbles] = useState<BubbleRenderState[]>([]);
   const speedRef = useRef(speed);
@@ -129,13 +145,40 @@ const Bubbles: FC<BubblesProps> = ({ items, speed }) => {
             boxShadow: `inset 0 0 40px -10px ${color}, 0 0 15px -5px ${color}`,
           };
 
+          let text = b.itemData.Predicted_Label;
+
+          if (displayMode === 'raw') {
+            text = getRawPreview(b.itemData.cleaned_website_text) || 'Raw Data';
+          } else if (displayMode === 'source') {
+            text = getDomain(b.itemData.website_url) || 'Source';
+          }
+
+          const bubbleContent = (
+            <h2>
+              {text}
+            </h2>
+          );
+
+          const content = displayMode === 'source' && b.itemData.website_url
+            ? (
+              <a
+                href={b.itemData.website_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.bubbleLink}
+              >
+                {bubbleContent}
+              </a>
+            )
+            : bubbleContent;
+
           return (
             <div
               key={b.id}
               className={styles.bubble}
               style={bubbleStyle}
             >
-              <h2>{b.itemData.Predicted_Label}</h2>
+              {content}
             </div>
           );
         })}

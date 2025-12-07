@@ -11,6 +11,7 @@ const App: FC<object> = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [items, setItems] = useState<Item[]>([]);
+  const [displayMode, setDisplayMode] = useState<'title' | 'raw' | 'source'>('title');
 
   const handleModalClose = () => navigate('/');
 
@@ -32,8 +33,11 @@ const App: FC<object> = () => {
   return (
     <>
       <Background />
-      <Header />
-      <HomePage items={items} />
+      <Header
+        displayMode={displayMode}
+        onDisplayModeChange={setDisplayMode}
+      />
+      <HomePage items={items} displayMode={displayMode} />
       <Routes>
         <Route
           path="/about"

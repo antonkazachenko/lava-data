@@ -4,7 +4,12 @@ import { ReactComponent as GithubLogo } from '../../assets/images/githubLogo.svg
 import CategoriesDropdown from './categories-dropdown';
 import styles from './header.module.css';
 
-const Header: FC<object> = () => (
+interface HeaderProps {
+  displayMode: 'title' | 'raw' | 'source';
+  onDisplayModeChange: (mode: 'title' | 'raw' | 'source') => void;
+}
+
+const Header: FC<HeaderProps> = ({ displayMode, onDisplayModeChange }) => (
   <header className={styles.headerFlex}>
     <div className={styles.navBar}>
       {/* eslint-disable-next-line react/jsx-no-undef */}
@@ -13,7 +18,10 @@ const Header: FC<object> = () => (
       </NavLink>
       <div className={styles.separator} />
       <div className={styles.navMiddle}>
-        <CategoriesDropdown />
+        <CategoriesDropdown
+          selected={displayMode}
+          onSelect={onDisplayModeChange}
+        />
         <NavLink to="/about" className={styles.hoverText} data-text="About">
           About
         </NavLink>

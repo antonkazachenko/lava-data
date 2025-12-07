@@ -11,9 +11,10 @@ import { Item } from '../../api/items';
 
 interface IHomePageProps {
   items: Item[];
+  displayMode: 'title' | 'raw' | 'source';
 }
 
-const HomePage: FC<IHomePageProps> = ({ items }) => {
+const HomePage: FC<IHomePageProps> = ({ items, displayMode }) => {
   const [speed, setSpeed] = useState(5);
   const [isPaused, setIsPaused] = useState(false);
 
@@ -30,7 +31,11 @@ const HomePage: FC<IHomePageProps> = ({ items }) => {
 
   return (
     <>
-      <Bubbles items={items} speed={isPaused ? 0 : speed} />
+      <Bubbles
+        items={items}
+        speed={isPaused ? 0 : speed}
+        displayMode={displayMode}
+      />
 
       {!isModalOpen && (
         <>
