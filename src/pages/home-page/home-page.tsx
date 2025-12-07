@@ -1,5 +1,5 @@
 import React, {
-  FC, useState, useCallback,
+  FC, useState, useCallback, useEffect, useMemo,
 } from 'react';
 import { useLocation } from 'react-router-dom';
 import * as Slider from '@radix-ui/react-slider';
@@ -29,6 +29,32 @@ const HomePage: FC<IHomePageProps> = ({ items, displayMode }) => {
     setSpeed(value[0] / 10);
   }, []);
 
+  const sliderValue = useMemo(() => [Math.round(speed * 10)], [speed]);
+
+  useEffect(() => {
+    const clampSpeed = (value: number) => Math.min(10, Math.max(1, value));
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === ' ') {
+        event.preventDefault();
+        setIsPaused((prevIsPaused) => !prevIsPaused);
+      }
+
+      if (event.key === 'ArrowUp') {
+        event.preventDefault();
+        setSpeed((prevSpeed) => clampSpeed(prevSpeed + 1));
+      }
+
+      if (event.key === 'ArrowDown') {
+        event.preventDefault();
+        setSpeed((prevSpeed) => clampSpeed(prevSpeed - 1));
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
   return (
     <>
       <Bubbles
@@ -56,7 +82,7 @@ const HomePage: FC<IHomePageProps> = ({ items, displayMode }) => {
             <Slider.Root
               className={styles.SliderRoot}
               orientation="vertical"
-              defaultValue={[50]}
+              value={sliderValue}
               max={100}
               step={1}
               min={10}
