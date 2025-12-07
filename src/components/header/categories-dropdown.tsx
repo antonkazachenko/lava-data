@@ -81,7 +81,12 @@ const menuItems: MenuItem[] = [
   },
 ];
 
-const CategoriesDropdown: FC = () => (
+interface CategoriesDropdownProps {
+  selected: 'title' | 'raw' | 'source';
+  onSelect: (mode: 'title' | 'raw' | 'source') => void;
+}
+
+const CategoriesDropdown: FC<CategoriesDropdownProps> = ({ selected, onSelect }) => (
   <DropdownMenu.Root>
     <DropdownMenu.Trigger asChild>
       <button
@@ -108,11 +113,15 @@ const CategoriesDropdown: FC = () => (
           <DropdownMenu.Item
             key={item.id}
             className={styles.dropdownItem}
+            onSelect={() => onSelect(item.id as CategoriesDropdownProps['selected'])}
           >
             <span className={styles.dropdownItemIcon}>
               <item.icon />
             </span>
-            <span>{item.label}</span>
+            <span>
+              {item.label}
+              {item.id === selected ? ' •' : ''}
+            </span>
             {item.shortcut ? (
               <span className={styles.dropdownShortcut}>{item.shortcut}</span>
             ) : null}
