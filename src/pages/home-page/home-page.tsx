@@ -47,22 +47,25 @@ const HomePage: FC<IHomePageProps> = ({ items, displayMode }) => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === ' ') {
         event.preventDefault();
+        event.stopPropagation();
         setIsPaused((prevIsPaused) => !prevIsPaused);
       }
 
       if (event.key === 'ArrowUp') {
         event.preventDefault();
+        event.stopPropagation();
         setSpeed((prevSpeed) => clampSpeed(prevSpeed + 1));
       }
 
       if (event.key === 'ArrowDown') {
         event.preventDefault();
+        event.stopPropagation();
         setSpeed((prevSpeed) => clampSpeed(prevSpeed - 1));
       }
     };
 
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    window.addEventListener('keydown', handleKeyDown, true);
+    return () => window.removeEventListener('keydown', handleKeyDown, true);
   }, []);
 
   return (
@@ -74,7 +77,7 @@ const HomePage: FC<IHomePageProps> = ({ items, displayMode }) => {
         onBubbleClick={handleBubbleClick}
       />
 
-      {!isModalOpen && (
+      {!isModalOpen && !selectedItem && (
         <>
           {/* Pause/Play Button */}
           {/* eslint-disable-next-line max-len */}
