@@ -99,3 +99,64 @@
     width: 24px;
     height: 24px;
 }
+
+.modalWidth {
+    width: 65vw;
+}
+
+.modalHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #F7F7F7;
+    font-family: "Manrope", serif;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 150%;
+}
+
+.modalBody {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    color: rgba(247, 247, 247, 0.9);
+    font-family: "Manrope", serif;
+}
+
+.metaRow {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding-bottom: 8px;
+}
+
+.label {
+    color: rgba(247, 247, 247, 0.7);
+    font-weight: 600;
+}
+
+.value {
+    color: #F7F7F7;
+    word-break: break-all;
+    text-align: right;
+}
+
+.rawContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.rawText {
+    margin: 0;
+    padding: 14px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.03);
+    color: rgba(247, 247, 247, 0.9);
+    max-height: 240px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+}

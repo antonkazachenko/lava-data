@@ -17,14 +17,5 @@
     text-align: center;
     padding: 10px;
     color: #fff;
-}
-
-.bubbleLink {
-    display: flex;
-    width: 100%;
-    height: 100%;
-    justify-content: center;
-    align-items: center;
-    color: inherit;
-    text-decoration: none;
+    cursor: pointer;
 }
