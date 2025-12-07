@@ -10,6 +10,7 @@ interface BubblesProps {
   items: Item[];
   speed: number;
   displayMode: 'title' | 'raw' | 'source';
+  onBubbleClick: (item: Item) => void;
 }
 
 interface BubbleRenderState {
@@ -39,9 +40,12 @@ const getRawPreview = (text: string) => {
   return words.join(' ');
 };
 
-const Bubbles: FC<BubblesProps> = ({ items, speed, displayMode }) => {
+const Bubbles: FC<BubblesProps> = ({
+  items, speed, displayMode, onBubbleClick,
+}) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [bubbles, setBubbles] = useState<BubbleRenderState[]>([]);
+  const isHoveringRef = useRef(false);
   const speedRef = useRef(speed);
 
   useEffect(() => {
@@ -89,11 +93,13 @@ const Bubbles: FC<BubblesProps> = ({ items, speed, displayMode }) => {
     let animationFrameId: number;
     const animate = () => {
       circleBodies.forEach((body) => {
-        if (speedRef.current === 0) {
+        const adjustedSpeed = speedRef.current * (isHoveringRef.current ? 0.35 : 1);
+
+        if (adjustedSpeed === 0) {
           Matter.Body.setVelocity(body, { x: 0, y: 0 });
         } else {
           Matter.Body.setVelocity(body, {
-            x: -speedRef.current,
+            x: -adjustedSpeed,
             y: body.velocity.y,
           });
         }
@@ -153,32 +159,26 @@ const Bubbles: FC<BubblesProps> = ({ items, speed, displayMode }) => {
             text = getDomain(b.itemData.website_url) || 'Source';
           }
 
-          const bubbleContent = (
-            <h2>
-              {text}
-            </h2>
-          );
-
-          const content = displayMode === 'source' && b.itemData.website_url
-            ? (
-              <a
-                href={b.itemData.website_url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={styles.bubbleLink}
-              >
-                {bubbleContent}
-              </a>
-            )
-            : bubbleContent;
-
           return (
             <div
               key={b.id}
               className={styles.bubble}
               style={bubbleStyle}
+              role="button"
+              tabIndex={0}
+              onClick={() => onBubbleClick(b.itemData)}
+              onMouseEnter={() => { isHoveringRef.current = true; }}
+              onMouseLeave={() => { isHoveringRef.current = false; }}
+              onKeyDown={(event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                  event.preventDefault();
+                  onBubbleClick(b.itemData);
+                }
+              }}
             >
-              {content}
+              <h2>
+                {text}
+              </h2>
             </div>
           );
         })}

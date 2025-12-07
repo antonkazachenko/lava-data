@@ -4,6 +4,7 @@ import React, {
 import { useLocation } from 'react-router-dom';
 import * as Slider from '@radix-ui/react-slider';
 import { Bubbles } from '../../components';
+import Modal from '../../components/modal/modal';
 import styles from './home-page.module.css';
 import { ReactComponent as PlayButton } from '../../assets/images/play.svg';
 import { ReactComponent as PauseButton } from '../../assets/images/stop.svg';
@@ -17,6 +18,7 @@ interface IHomePageProps {
 const HomePage: FC<IHomePageProps> = ({ items, displayMode }) => {
   const [speed, setSpeed] = useState(5);
   const [isPaused, setIsPaused] = useState(false);
+  const [selectedItem, setSelectedItem] = useState<Item | null>(null);
 
   const location = useLocation();
   const isModalOpen = location.pathname === '/about';
@@ -30,6 +32,14 @@ const HomePage: FC<IHomePageProps> = ({ items, displayMode }) => {
   }, []);
 
   const sliderValue = useMemo(() => [Math.round(speed * 10)], [speed]);
+
+  const handleBubbleClick = useCallback((item: Item) => {
+    setSelectedItem(item);
+  }, []);
+
+  const handleModalClose = useCallback(() => {
+    setSelectedItem(null);
+  }, []);
 
   useEffect(() => {
     const clampSpeed = (value: number) => Math.min(10, Math.max(1, value));
@@ -61,6 +71,7 @@ const HomePage: FC<IHomePageProps> = ({ items, displayMode }) => {
         items={items}
         speed={isPaused ? 0 : speed}
         displayMode={displayMode}
+        onBubbleClick={handleBubbleClick}
       />
 
       {!isModalOpen && (
@@ -95,6 +106,45 @@ const HomePage: FC<IHomePageProps> = ({ items, displayMode }) => {
             </Slider.Root>
           </div>
         </>
+      )}
+
+      {selectedItem && (
+        <Modal
+          onClose={handleModalClose}
+          title={selectedItem.Predicted_Label}
+          className={styles.modalWidth}
+          headerClass={`${styles.modalHeader} mt-10 ml-10 mr-10`}
+        >
+          <div className={styles.modalBody}>
+            <div className={styles.metaRow}>
+              <span className={styles.label}>Category</span>
+              <span className={styles.value}>{selectedItem.Predicted_Label}</span>
+            </div>
+            <div className={styles.metaRow}>
+              <span className={styles.label}>Source</span>
+              {selectedItem.website_url ? (
+                <a
+                  className={styles.value}
+                  href={selectedItem.website_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {selectedItem.website_url}
+                </a>
+              ) : (
+                <span className={styles.value}>N/A</span>
+              )}
+            </div>
+            <div className={styles.metaRow}>
+              <span className={styles.label}>ID</span>
+              <span className={styles.value}>{selectedItem.id}</span>
+            </div>
+            <div className={styles.rawContainer}>
+              <span className={styles.label}>Raw Data</span>
+              <p className={styles.rawText}>{selectedItem.cleaned_website_text}</p>
+            </div>
+          </div>
+        </Modal>
       )}
     </>
   );
